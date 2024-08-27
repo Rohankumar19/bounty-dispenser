@@ -5,13 +5,19 @@ import { useEffect, useRef } from 'react';
 const ButtonWrapper = ({
   text,
   widthLength,
+  onclick,
 }: {
   text: string;
   widthLength: string;
+  onclick: any;
 }) => {
   return (
     <div className="flex items-center justify-center">
-      <SpotlightButton text={text} widthLength={widthLength} />
+      <SpotlightButton
+        text={text}
+        widthLength={widthLength}
+        onclick={onclick}
+      />
     </div>
   );
 };
@@ -19,9 +25,11 @@ const ButtonWrapper = ({
 const SpotlightButton = ({
   text,
   widthLength,
+  onclick,
 }: {
   text: string;
   widthLength: string;
+  onclick: any;
 }) => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const spanRef = useRef<HTMLSpanElement | null>(null);
@@ -55,6 +63,7 @@ const SpotlightButton = ({
     <motion.button
       whileTap={{ scale: 0.985 }}
       ref={btnRef}
+      onClick={onclick}
       className="relative w-full overflow-hidden rounded-lg bg px-4 py-3 text-lg font-medium text-black"
     >
       <span className="pointer-events-none relative z-10 text-white">

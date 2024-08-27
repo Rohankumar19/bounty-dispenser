@@ -9,7 +9,7 @@ const page = () => {
   return (
     <>
       <main className=" grid grid-cols-2 h-screen">
-        <div className="p-48 bg-white">
+        <div className="p-48 ">
           <LoginArea />
         </div>
 

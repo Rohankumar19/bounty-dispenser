@@ -20,9 +20,14 @@ const config: Config = {
       },
       boxShadow: {
         input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
+        custom: 'rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;',
       },
       colors: {
         'custom-orange': '#f95738',
+        'card-background': '#F5F5F5',
+        'card-text': '#2C2C2C',
+        'card-border': '#B0B0B0',
+        'main-background': '#D0D0D0',
       },
     },
   },
