@@ -16,7 +16,6 @@ export const TypewriterEffect = ({
   className?: string;
   cursorClassName?: string;
 }) => {
-  // split text inside of words into array of characters
   const wordsArray = words.map((word) => {
     return {
       ...word,
@@ -55,7 +54,7 @@ export const TypewriterEffect = ({
                   initial={{}}
                   key={`char-${index}`}
                   className={cn(
-                    `dark:text-white text-black opacity-0 hidden`,
+                    `text-login-page-color opacity-0 hidden`,
                     word.className,
                   )}
                 >
@@ -72,7 +71,7 @@ export const TypewriterEffect = ({
   return (
     <div
       className={cn(
-        'text-base sm:text-xl md:text-3xl lg:text-5xl font-bold text-center',
+        'text-base sm:text-xl md:text-3xl lg:text-7xl font-bold text-center',
         className,
       )}
     >
@@ -126,7 +125,7 @@ export const TypewriterEffectSmooth = ({
               {word.text.map((char, index) => (
                 <span
                   key={`char-${index}`}
-                  className={cn(`dark:text-white text-black `, word.className)}
+                  className={cn(`text-login-page-color`, word.className)}
                 >
                   {char}
                 </span>

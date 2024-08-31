@@ -1,10 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import React from 'react';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <>
-      <div className="p-2 h">Hello</div>
-    </>
-  );
-}
+const Page = () => {
+  redirect('/login');
+  return null;
+};
+
+export default Page;

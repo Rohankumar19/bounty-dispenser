@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
+import SessionWrapper from './components/SessionWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,9 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Theme>{children}</Theme>
-      </body>
+      <SessionWrapper>
+        <body className={inter.className}>
+          <Theme>{children}</Theme>
+        </body>
+      </SessionWrapper>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import NavigationBar from '@/app/components/NavigationBar';
 import RepoList from '@/app/components/RepoList';
-import { GetServerSideProps } from 'next';
+
 require('dotenv').config();
 
 interface Issues {
@@ -22,7 +22,7 @@ interface ReportData {
 // fetching the data on server side and passing it to a client component
 const fetchData = async (): Promise<ReportData> => {
   try {
-    const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+    const token = process.env.GITHUB_TOKEN;
     const url = 'https://api.github.com/repos/nodejs/node';
     const options = {
       headers: {
