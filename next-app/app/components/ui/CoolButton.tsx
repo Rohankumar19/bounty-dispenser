@@ -9,7 +9,7 @@ const ButtonWrapper = ({
 }: {
   text: string;
   widthLength: string;
-  onclick: any;
+  onclick: () => void;
 }) => {
   return (
     <div className="flex items-center justify-center">
@@ -29,7 +29,7 @@ const SpotlightButton = ({
 }: {
   text: string;
   widthLength: string;
-  onclick: any;
+  onclick: () => void;
 }) => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const spanRef = useRef<HTMLSpanElement | null>(null);
@@ -64,14 +64,14 @@ const SpotlightButton = ({
       whileTap={{ scale: 0.985 }}
       ref={btnRef}
       onClick={onclick}
-      className="relative w-full overflow-hidden rounded-lg bg px-4 py-3 text-lg font-medium text-black"
+      className="relative w-full overflow-hidden rounded-lg bg px-4 py-3 text-lg font-medium text-black m-10"
     >
       <span className="pointer-events-none relative z-10 text-white">
         {text}
       </span>
       <span
         ref={spanRef}
-        className={`pointer-events-none absolute left-[50%] top-[50%] h-32 -translate-x-[50%] -translate-y-[50%] rounded-full bg-custom-orange ${widthLength}`}
+        className={`pointer-events-none absolute left-[50%] top-[50%] h-32 -translate-x-[50%] -translate-y-[50%] rounded-full bg-login-page-color ${widthLength}`}
       />
     </motion.button>
   );

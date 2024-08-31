@@ -28,6 +28,7 @@ const config: Config = {
         'card-text': '#2C2C2C',
         'card-border': '#B0B0B0',
         'main-background': '#D0D0D0',
+        'login-page-color': '#15553d',
       },
     },
   },

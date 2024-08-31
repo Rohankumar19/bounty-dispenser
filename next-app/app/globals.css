@@ -5,3 +5,18 @@
 .whiteColor {
   background-color: white;
 }
+
+.animate-container {
+  animation: constainer 0.75s ease-in-out;
+}
+
+@keyframes constainer {
+  from {
+    opacity: 0;
+    transform: rotateX(-10deg);
+  }
+  to {
+    overflow: 1;
+    transform: rotateX(0deg);
+  }
+}
