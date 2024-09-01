@@ -1,3 +1,4 @@
+import { POST } from '@/app/api/auth/[...nextauth]/route';
 import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 
@@ -20,6 +21,18 @@ export const authOptions: NextAuthOptions = {
         const userData = await response.json();
         user.githubAccountName = userData.login;
         user.githubId = userData.id;
+
+        // updating the database
+        console.log(user);
+        const res = await fetch('http://localhost:8000/api/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(user),
+        });
+        const data = await res.json();
+        console.log(data);
       }
       return true;
     },
@@ -38,7 +51,6 @@ export const authOptions: NextAuthOptions = {
         session.user.githubAccountName = token.githubAccountName;
         session.user.githubId = token.githubId;
       }
-
       return session;
     },
   },

@@ -1,6 +1,7 @@
 'use client';
 import ButtonWrapper from './ui/CoolButton';
 import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const LoginArea = () => {
   return (
