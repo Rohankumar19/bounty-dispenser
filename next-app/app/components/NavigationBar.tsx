@@ -1,5 +1,4 @@
 'use client';
-import React, { useEffect } from 'react';
 import { FloatingDock } from './ui/floating-dock';
 import { signOut } from 'next-auth/react';
 
@@ -40,7 +39,7 @@ const NavigationBar = () => {
                 </g>
               </svg>
             ),
-            href: '#',
+            href: '/dashboard',
           },
           {
             title: 'Repos',
@@ -63,7 +62,7 @@ const NavigationBar = () => {
                 </g>
               </svg>
             ),
-            href: '#',
+            href: '/repositories',
           },
           {
             title: 'Sign Out',

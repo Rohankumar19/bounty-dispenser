@@ -2,6 +2,8 @@ import React from 'react';
 import NavigationBar from '@/app/components/NavigationBar';
 import RepoList from '@/app/components/RepoList';
 
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 require('dotenv').config();
 
 interface Issues {
@@ -10,6 +12,7 @@ interface Issues {
 }
 
 interface ReportData {
+  githubAccountName: string | null;
   owner: string | null;
   description: string | null;
   name: string | null;
@@ -54,7 +57,10 @@ const fetchData = async (): Promise<ReportData> => {
     }
     const issuesData = await issuesResponse.json();
 
+    const session = await getServerSession(authOptions);
+
     return {
+      githubAccountName: session?.user?.githubAccountName,
       owner: data.owner.login,
       name: data.name,
       description: data.description,
@@ -67,6 +73,7 @@ const fetchData = async (): Promise<ReportData> => {
     console.log('error while fetching data' + err);
 
     return {
+      githubAccountName: null,
       owner: null,
       name: null,
       description: null,
@@ -79,11 +86,21 @@ const fetchData = async (): Promise<ReportData> => {
 };
 
 const page = async () => {
-  const { owner, name, description, stars, forks, languages, issues } =
-    await fetchData();
+  const {
+    githubAccountName,
+    owner,
+    name,
+    description,
+    stars,
+    forks,
+    languages,
+    issues,
+  } = await fetchData();
+
   return (
     <>
       <RepoList
+        githubAccouuntName={githubAccountName}
         owner={owner}
         name={name}
         description={description}

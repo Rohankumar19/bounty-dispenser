@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Issues {
   title: string;
@@ -7,6 +7,7 @@ interface Issues {
 }
 
 interface ReportData {
+  githubAccouuntName: string | null;
   owner: string | null;
   description: string | null;
   name: string | null;
@@ -16,8 +17,15 @@ interface ReportData {
   issues: Issues[];
 }
 
+interface IssuesWorkingOn {
+  onwer: string;
+  repo: string;
+  issueNumber: number;
+}
+
 // React.FC<> is used for type checking the props that are passed
 const RepoList: React.FC<ReportData> = ({
+  githubAccouuntName,
   owner,
   description,
   name,
@@ -27,14 +35,65 @@ const RepoList: React.FC<ReportData> = ({
   issues,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [IssuesWorkingOn, setIssuesWorkingOn] = useState<IssuesWorkingOn[]>([]);
+
+  useEffect(() => {
+    const updateIssues = async () => {
+      if (!isModalOpen) {
+        console.log(IssuesWorkingOn);
+        try {
+          console.log('working');
+          const response = await fetch(
+            `http://localhost:8000/api/user/${githubAccouuntName}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(IssuesWorkingOn),
+            },
+          );
+
+          const data = await response.json();
+          console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+        setIssuesWorkingOn([]);
+      }
+    };
+
+    updateIssues();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModalOpen]);
+
+  if (!owner || !name) {
+    return <div>Data Loading</div>;
+  }
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  if (!owner || !name) {
-    return <div>Data Loading</div>;
-  }
+  const updateIssues = (
+    currentIssueNumber: number,
+    checkboxStatus: boolean,
+  ) => {
+    if (checkboxStatus) {
+      setIssuesWorkingOn([
+        ...IssuesWorkingOn,
+        {
+          onwer: owner as string,
+          repo: name as string,
+          issueNumber: currentIssueNumber,
+        },
+      ]);
+    } else {
+      setIssuesWorkingOn((prevIssue) =>
+        prevIssue.filter((issue) => issue.issueNumber !== currentIssueNumber),
+      );
+    }
+  };
 
   return (
     <div className=" bg-main-background h-screen p-4">
@@ -57,6 +116,7 @@ const RepoList: React.FC<ReportData> = ({
             ))}
           </div>
         </div>
+
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-70 border-black border-2 flex items-center justify-center">
             <div className="bg-white p-4 rounded-lg w-3/4 max-w-2xl h-3/4 overflow-auto">
@@ -65,17 +125,22 @@ const RepoList: React.FC<ReportData> = ({
               <div>
                 {issues.map((issue, index) => (
                   <div
-                    className="grid"
+                    className="grid gap-4"
                     style={{
                       gridTemplateColumns: '100px 1fr',
+                      gridAutoFlow: 'column',
                     }}
                     key={issue.number}
                   >
-                    <div key={issue.number} className="m-2">
-                      #{issue.number}
-                    </div>
-                    <div key={index} className="m-2">
-                      {issue.title}
+                    <div className="m-2">#{issue.number}</div>
+                    <div className="m-2">{issue.title}</div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        onChange={(e) =>
+                          updateIssues(issue.number, e.target.checked)
+                        }
+                      />
                     </div>
                   </div>
                 ))}
